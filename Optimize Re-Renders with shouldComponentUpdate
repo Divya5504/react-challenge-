@@ -6,24 +6,28 @@ The shouldComponentUpdate() method is added in a component called OnlyEvens. Cur
 
 
 
-
 class OnlyEvens extends React.Component {
   constructor(props) {
     super(props);
   }
   shouldComponentUpdate(nextProps, nextState) {
     console.log('Should I update?');
-    // Change code below this line
-    return nextProps.value % 2 === 0;
-    // Change code above this line
+     // change code below this line
+    if (nextProps.value % 2 === 0 ) {
+    return true;
+    }
+     // change code above this line
+  }
+  componentWillReceiveProps(nextProps) {
+    console.log('Receiving new props...');
   }
   componentDidUpdate() {
     console.log('Component re-rendered.');
   }
   render() {
-    return <h1>{this.props.value}</h1>;
+    return <h1>{this.props.value}</h1>
   }
-}
+};
 
 class Controller extends React.Component {
   constructor(props) {
@@ -34,16 +38,15 @@ class Controller extends React.Component {
     this.addValue = this.addValue.bind(this);
   }
   addValue() {
-    this.setState(state => ({
-      value: state.value + 1
-    }));
+    this.setState({
+      value: this.state.value + 1
+    });
   }
   render() {
     return (
       <div>
         <button onClick={this.addValue}>Add</button>
-        <OnlyEvens value={this.state.value} />
+        <OnlyEvens value={this.state.value}/>
       </div>
     );
   }
-}
